@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>디스코드 봇 실시간 통계</title>
+    <title>공식 디스코드 봇</title>
     <style>
         * {
             margin: 0;
@@ -15,101 +15,231 @@
         body {
             background-color: #0b0e14;
             color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            line-height: 1.6;
         }
 
         .container {
-            width: 100%;
-            max-width: 480px;
-            background: #131722;
-            padding: 30px 24px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        .title {
-            font-size: 1.5rem;
+        /* 헤더 / 메인 소개 */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: radial-gradient(circle at top, #1e293b 0%, #0b0e14 100%);
+            border-radius: 24px;
+            margin-bottom: 40px;
+            border: 1px solid #1e293b;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 32px;
+            word-break: keep-all;
+        }
+
+        /* 버튼 영역 */
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 12px;
             font-weight: 700;
-            margin-bottom: 30px;
-            letter-spacing: -0.5px;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: #5865F2;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #4752C4;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #1e293b;
+            color: #ffffff;
+            border: 1px solid #334155;
+        }
+
+        .btn-secondary:hover {
+            background-color: #334155;
+            transform: translateY(-2px);
+        }
+
+        /* 실시간 통계 카드 */
+        .stats-card {
+            background: #131722;
+            padding: 32px;
+            border-radius: 20px;
+            border: 1px solid #1e293b;
+            margin-bottom: 40px;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px 16px;
-        }
-
-        .stat-item {
-            display: flex;
-            flex-direction: column;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            text-align: center;
         }
 
         .stat-number {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            color: #ffffff;
-            line-height: 1.2;
+            color: #38bdf8;
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #94a3b8;
             margin-top: 4px;
-            font-weight: 500;
         }
 
-        .description {
-            margin-top: 32px;
+        /* 주요 기능 소개 */
+        .features {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: #131722;
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: #f8fafc;
+        }
+
+        .feature-card p {
             font-size: 0.95rem;
-            color: #cbd5e1;
-            line-height: 1.6;
-            word-break: keep-all;
+            color: #94a3b8;
+        }
+
+        /* 푸터 */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+            font-size: 0.85rem;
+            border-top: 1px solid #1e293b;
+            margin-top: 60px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1 class="title">🤖 내 디스코드 봇</h1>
-
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-number" id="server-count">0</div>
-                <div class="stat-label">서버 보호중</div>
+        <!-- 1. 헤더 및 메인 링크 -->
+        <section class="hero">
+            <h1>🤖 내 디스코드 봇</h1>
+            <p>서버 관리, 보안, 각종 편의 기능까지! 당신의 디스코드 서버를 더욱 안전하고 스마트하게 관리하세요.</p>
+            
+            <div class="btn-group">
+                <!-- 실제 봇 ID가 적용된 초대 링크 -->
+                <a href="https://discord.com/oauth2/authorize?client_id=1563849924146106500&permissions=8&scope=bot" target="_blank" class="btn btn-primary">
+                    🚀 봇 초대하기
+                </a>
+                <!-- 실제 디스코드 초대 링크 -->
+                <a href="https://discord.gg/sQnYwRy9t" target="_blank" class="btn btn-secondary">
+                    💬 지원 디스코드
+                </a>
             </div>
-            <div class="stat-item">
-                <div class="stat-number" id="member-count">0</div>
-                <div class="stat-label">멤버 보호중</div>
-            </div>
-        </div>
+        </section>
 
-        <p class="description">
-            우리 디스코드 봇은 서버 생태계에 맞춰 여러 편의 및 보안 기능을 제공하여 당신의 서버를 안전하고 편리하게 만듭니다.
-        </p>
+        <!-- 2. 실시간 통계 섹션 -->
+        <section class="stats-card">
+            <div class="stats-grid">
+                <div>
+                    <div class="stat-number" id="server-count">0</div>
+                    <div class="stat-label">함께하는 서버</div>
+                </div>
+                <div>
+                    <div class="stat-number" id="member-count">0</div>
+                    <div class="stat-label">보호 중인 유저</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 봇 기능 소개 섹션 -->
+        <section class="features">
+            <h2 class="section-title">✨ 주요 기능</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🛡️ 서버 보안 및 관리</h3>
+                    <p>악성 유저 차단 및 자동 쿨다운 설정을 통해 서버를 안전하게 보호합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⚡ 자동화 명령어</h3>
+                    <p>역할 자동 부여, 환영 메시지 전송 등 번거로운 작업을 자동으로 처리합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎮 편의 & 엔터테인먼트</h3>
+                    <p>유저들이 즐길 수 있는 다양한 미니게임 및 서버 통계 조회 기능을 제공합니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            © 2026 내 디스코드 봇. All rights reserved.
+        </footer>
     </div>
 
+    <!-- 4. 실시간 카운트 자바스크립트 -->
     <script>
-        // 숫자가 0부터 목표 수치까지 촤르륵 올라가는 애니메이션 함수
         function animateCount(elementId, targetNumber) {
             const element = document.getElementById(elementId);
-            const duration = 1500; // 애니메이션 진행 시간 (1.5초)
-            const frameRate = 1000 / 60; // 초당 60프레임
+            const duration = 1500;
+            const frameRate = 1000 / 60;
             const totalFrames = Math.round(duration / frameRate);
-            
             let currentFrame = 0;
 
             const counter = setInterval(() => {
                 currentFrame++;
-                // 점점 느려지면서 멈추는 진행률 계산 (Ease-Out)
                 const progress = 1 - Math.pow(1 - currentFrame / totalFrames, 3);
                 const currentNumber = Math.floor(targetNumber * progress);
 
-                element.innerText = currentNumber.toLocaleString(); // 1,000 단위 콤마 추가
+                element.innerText = currentNumber.toLocaleString();
 
                 if (currentFrame >= totalFrames) {
                     element.innerText = targetNumber.toLocaleString();
@@ -118,16 +248,14 @@
             }, frameRate);
         }
 
-        // Render 백엔드 API에서 데이터 불러오기
         fetch('https://server-js-osl5.onrender.com/api/stats')
             .then(response => response.json())
             .then(data => {
-                // 데이터를 받아오면 애니메이션 실행
                 animateCount('server-count', data.serverCount || 0);
                 animateCount('member-count', data.memberCount || 0);
             })
             .catch(error => {
-                console.error('데이터를 불러오는 중 에러 발생:', error);
+                console.error('데이터 로드 실패:', error);
                 document.getElementById('server-count').innerText = '0';
                 document.getElementById('member-count').innerText = '0';
             });
