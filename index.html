@@ -36,7 +36,6 @@
             padding: 40px 20px;
         }
 
-        /* 네비게이션바 */
         nav {
             display: flex;
             justify-content: space-between;
@@ -55,7 +54,6 @@
             letter-spacing: -0.5px;
         }
 
-        /* Absolute 'A' 프로필 로고 스타일 */
         .bot-logo {
             width: 36px;
             height: 36px;
@@ -71,7 +69,6 @@
             box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
         }
 
-        /* 히어로 섹션 */
         .hero {
             text-align: center;
             padding: 60px 20px;
@@ -115,7 +112,6 @@
             word-break: keep-all;
         }
 
-        /* 버튼 스타일 */
         .btn-group {
             display: flex;
             gap: 12px;
@@ -158,7 +154,6 @@
             transform: translateY(-2px);
         }
 
-        /* 실시간 통계 그리드 */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -188,7 +183,6 @@
             font-weight: 500;
         }
 
-        /* 스크롤 애니메이션 클래스 (옆에서 부드럽게 등장) */
         .animate-on-scroll {
             opacity: 0;
             transform: translateX(-50px);
@@ -200,7 +194,6 @@
             transform: translateX(0);
         }
 
-        /* 기능 카드 섹션 */
         .section-title {
             font-size: 1.6rem;
             font-weight: 700;
@@ -237,7 +230,6 @@
             line-height: 1.6;
         }
 
-        /* 하단 푸터 및 정책 링크 영역 */
         footer {
             border-top: 1px solid var(--border);
             padding: 40px 0;
@@ -275,14 +267,13 @@
             margin-bottom: 8px;
         }
 
-        .footer-col ul li a, .modal-link {
+        .footer-col ul li a {
             color: var(--text-muted);
             text-decoration: none;
-            cursor: pointer;
             transition: color 0.2s;
         }
 
-        .footer-col ul li a:hover, .modal-link:hover {
+        .footer-col ul li a:hover {
             color: #60a5fa;
         }
 
@@ -291,53 +282,6 @@
             font-size: 0.85rem;
             color: #64748b;
         }
-
-        /* 모달 팝업 스타일 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: #131722;
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 550px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-content h3 {
-            margin-bottom: 16px;
-            font-size: 1.4rem;
-            color: #f8fafc;
-        }
-
-        .modal-content p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px; right: 20px;
-            background: none; border: none;
-            color: var(--text-muted);
-            font-size: 1.2rem; cursor: pointer;
-        }
-        .close-btn:hover { color: #fff; }
 
         @media (max-width: 600px) {
             .stats-grid { grid-template-columns: 1fr; }
@@ -349,7 +293,6 @@
 <body>
 
     <div class="container">
-        <!-- 네비게이션 -->
         <nav>
             <div class="brand">
                 <div class="bot-logo">A</div>
@@ -360,11 +303,10 @@
             </a>
         </nav>
 
-        <!-- 상단 히어로 섹션 -->
         <section class="hero animate-on-scroll">
             <div class="badge">OFFICIAL DISCORD BOT</div>
-            <h1>서버 운영의 모든 문제<br><span>Absolute 하나로 완벽하게</span></h1>
-            <p>팀 Agent가 개발한 Absolute 봇은 강력한 실시간 보안, 도배 감지, 스마트 커뮤니티 관리 기능을 제공하여 디스코드 서버를 안전하게 보호합니다.</p>
+            <h1>서버 복구와 완벽한 케어<br><span>Absolute 하나로 안전하게</span></h1>
+            <p>팀 Agent가 개발한 Absolute 봇은 비상 상황 발생 시 신속한 서버 복구 및 채널 백업 시스템을 제공하여 디스코드 커뮤니티의 안전을 책임집니다.</p>
             
             <div class="btn-group">
                 <a href="https://discord.com/oauth2/authorize?client_id=1563849924146106500&permissions=8&scope=bot" target="_blank" class="btn btn-primary">
@@ -376,7 +318,6 @@
             </div>
         </section>
 
-        <!-- 실시간 통계 섹션 -->
         <div class="stats-grid animate-on-scroll">
             <div class="stat-card">
                 <div class="stat-number" id="server-count">0</div>
@@ -388,27 +329,25 @@
             </div>
         </div>
 
-        <!-- 봇 기능 소개 섹션 (스크롤 시 옆에서 등장) -->
         <section class="features">
             <h2 class="section-title animate-on-scroll">Absolute의 핵심 기능</h2>
             
             <div class="feature-card animate-on-scroll">
-                <h3>🛡️ 실시간 악성유저 & 테러 방지</h3>
-                <p>글로벌 블랙리스트와 연동하여 서버 테러, 무단홍보, 레이드, 분당 및 해킹 등 위험 유저를 탐지하여 서버를 안전하게 방어합니다.</p>
+                <h3>🔄 신속한 서버 백업 및 복구 시스템</h3>
+                <p>예기치 못한 테러나 비상 상황으로 채널 및 권한이 손상되었을 때, 사전 백업 데이터를 바탕으로 빠르고 안전하게 서버를 원상 복구합니다.</p>
             </div>
 
             <div class="feature-card animate-on-scroll">
-                <h3>🔗 초대링크 및 도배 검열</h3>
-                <p>관리자 권한 없는 유저의 타 서버 초대링크 유포, 도배 및 단타 메시지를 실시간으로 감지하고 즉시 자동 차단 및 타임아웃 처벌을 내립니다.</p>
+                <h3>🛡️ 비상 방어 및 권한 보호</h3>
+                <p>관리자 권한 남용이나 비정상적인 대규모 추방·삭제 시도가 감지되면 민감한 권한을 임시 차단하여 2차 피해와 서버 파괴를 막아냅니다.</p>
             </div>
 
             <div class="feature-card animate-on-scroll">
-                <h3>⚡ 스마트 커뮤니티 케어</h3>
-                <p>복잡한 설정 없이 직관적인 명령어 시스템을 통해 24시간 공백 없는 서버 보안 및 통합 관리를 지원합니다.</p>
+                <h3>⚙️ 스마트 채널 & 커뮤니티 관리</h3>
+                <p>복잡한 설정 없이 직관적인 명령어 하나로 서버 환경을 모니터링하고 체계적으로 관리할 수 있도록 지원합니다.</p>
             </div>
         </section>
 
-        <!-- 하단 푸터 (사이트 기준 약관 및 팀 Agent 명시) -->
         <footer>
             <div class="footer-content">
                 <div>
@@ -423,19 +362,18 @@
                     <div class="footer-col">
                         <h4>이용약관</h4>
                         <ul>
-                            <li><a onclick="openModal('termsModal')">사이트 이용약관</a></li>
+                            <li><a href="terms.html">사이트 이용약관</a></li>
                         </ul>
                     </div>
                     <div class="footer-col">
                         <h4>개인정보</h4>
                         <ul>
-                            <li><a onclick="openModal('privacyModal')">개인정보 처리방침</a></li>
+                            <li><a href="privacy.html">개인정보 처리방침</a></li>
                         </ul>
                     </div>
                     <div class="footer-col">
                         <h4>지원 및 도움말</h4>
                         <ul>
-                            <li><a onclick="openModal('helpModal')">도움말 문서</a></li>
                             <li><a href="https://discord.gg/sQnYwRy9t" target="_blank">서포트 서버</a></li>
                         </ul>
                     </div>
@@ -448,43 +386,8 @@
         </footer>
     </div>
 
-    <!-- 모달 팝업들 -->
-    <div id="termsModal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('termsModal')">✕</button>
-            <h3>사이트 이용약관</h3>
-            <p><strong>제 1 조 (목적)</strong> 본 약관은 팀 Agent(이하 "회사")가 제공하는 Absolute 봇 공식 웹사이트 및 관련 서비스의 이용조건과 절차를 규정합니다.</p>
-            <p><strong>제 2 조 (용어의 정의)</strong> 본 사이트에서 제공하는 모든 웹페이지 정보 및 관련 서비스는 본 약관에 동의한 사용자에게 제공됩니다.</p>
-            <p><strong>제 3 조 (책임의 한계)</strong> 팀 Agent는 천재지변 또는 디스코드 API의 예기치 못한 장애로 인한 서비스 중단에 대해 책임을 지지 않습니다.</p>
-        </div>
-    </div>
-
-    <div id="privacyModal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('privacyModal')">✕</button>
-            <h3>개인정보 처리방침</h3>
-            <p>팀 Agent는 공식 웹사이트 및 봇 서비스 제공을 위해 최소한의 정보만을 처리합니다.</p>
-            <p><strong>1. 수집하는 정보:</strong> 디스코드 봇 구동에 필요한 서버 ID, 유저 통계 수치 외에 민감한 개인정보를 따로 수집하지 않습니다.</p>
-            <p><strong>2. 개인정보의 이용 목적:</strong> 실시간 서버 및 멤버 통계 연동 외 다른 목적으로 사용되지 않습니다.</p>
-        </div>
-    </div>
-
-    <div id="helpModal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('helpModal')">✕</button>
-            <h3>도움말 문서</h3>
-            <p><strong>Q. 봇을 서버에 어떻게 추가하나요?</strong><br>상단의 '봇 추가하기' 버튼을 눌러 관리자 권한이 있는 디스코드 서버를 선택하시면 됩니다.</p>
-            <p><strong>Q. 실시간 통계가 안 불러와져요!</strong><br>백엔드 서버 상태나 인터넷 연결을 확인해 주세요. 지속될 경우 공식 서포트 서버로 문의 바랍니다.</p>
-        </div>
-    </div>
-
-    <!-- 자바스크립트 (애니메이션, 통계 카운트, 모달 제어) -->
     <script>
-        // 1. 스크롤할 때 옆에서 부드럽게 나타나는 애니메이션 (Intersection Observer)
-        const observerOptions = {
-            threshold: 0.1
-        };
-
+        const observerOptions = { threshold: 0.1 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -497,7 +400,6 @@
             observer.observe(el);
         });
 
-        // 2. 숫자 카운트업 함수
         function animateCount(elementId, targetNumber) {
             const element = document.getElementById(elementId);
             const duration = 1500;
@@ -519,7 +421,6 @@
             }, frameRate);
         }
 
-        // 3. Render API 통계 데이터 가져오기
         fetch('https://server-js-osl5.onrender.com/api/stats')
             .then(response => response.json())
             .then(data => {
@@ -531,19 +432,6 @@
                 document.getElementById('server-count').innerText = '0';
                 document.getElementById('member-count').innerText = '0';
             });
-
-        // 4. 모달 팝업 제어 함수
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-            }
-        }
     </script>
 </body>
 </html>
