@@ -3,56 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공식 디스코드 봇</title>
+    <title>Absolute - 최고의 디스코드 완벽 케어 봇</title>
     <style>
+        :root {
+            --primary: #7289da;
+            --primary-glow: rgba(114, 137, 218, 0.4);
+            --accent: #5865f2;
+            --bg-main: #0a0c10;
+            --bg-card: #121620;
+            --bg-card-hover: #181d2a;
+            --border: #1e2638;
+            --text-main: #f0f4fc;
+            --text-muted: #8a99ad;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
         }
 
         body {
-            background-color: #0b0e14;
-            color: #ffffff;
+            background-color: var(--bg-main);
+            color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 배경 글로우 효과 */
+        .bg-glow {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, rgba(10, 12, 16, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 0 24px;
         }
 
-        /* 헤더 / 메인 소개 */
+        /* 상단 내비게이션 */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand span {
+            color: var(--primary);
+        }
+
+        /* 메인 상단 히어로 */
         .hero {
             text-align: center;
-            padding: 60px 20px;
-            background: radial-gradient(circle at top, #1e293b 0%, #0b0e14 100%);
-            border-radius: 24px;
-            margin-bottom: 40px;
-            border: 1px solid #1e293b;
+            padding: 80px 0 50px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(114, 137, 218, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
         }
 
         .hero h1 {
             font-size: 2.8rem;
             font-weight: 800;
-            margin-bottom: 16px;
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            line-height: 1.25;
+            margin-bottom: 20px;
+            word-break: keep-all;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, #a5b4fc, var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
             font-size: 1.1rem;
-            color: #94a3b8;
-            max-width: 600px;
-            margin: 0 auto 32px;
+            color: var(--text-muted);
+            max-width: 640px;
+            margin: 0 auto 36px;
             word-break: keep-all;
         }
 
-        /* 버튼 영역 */
-        .btn-group {
+        /* CTA 버튼 */
+        .cta-buttons {
             display: flex;
             gap: 16px;
             justify-content: center;
@@ -60,177 +122,245 @@
         }
 
         .btn {
-            padding: 14px 28px;
+            padding: 14px 32px;
             border-radius: 12px;
             font-weight: 700;
             font-size: 1rem;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .btn-primary {
-            background-color: #5865F2;
+        .btn-invite {
+            background-color: var(--accent);
             color: #ffffff;
+            box-shadow: 0 4px 20px var(--primary-glow);
         }
 
-        .btn-primary:hover {
-            background-color: #4752C4;
-            transform: translateY(-2px);
+        .btn-invite:hover {
+            transform: translateY(-3px);
+            background-color: #4752c4;
+            box-shadow: 0 6px 24px var(--primary-glow);
         }
 
-        .btn-secondary {
-            background-color: #1e293b;
-            color: #ffffff;
-            border: 1px solid #334155;
+        .btn-support {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border);
         }
 
-        .btn-secondary:hover {
-            background-color: #334155;
-            transform: translateY(-2px);
+        .btn-support:hover {
+            transform: translateY(-3px);
+            background-color: var(--bg-card-hover);
+            border-color: var(--primary);
         }
 
-        /* 실시간 통계 카드 */
-        .stats-card {
-            background: #131722;
-            padding: 32px;
+        /* 실시간 대시보드 통계 카드 */
+        .stats-wrapper {
+            margin: 40px 0 80px;
+            background: linear-gradient(180deg, var(--bg-card) 0%, rgba(18, 22, 32, 0.6) 100%);
+            border: 1px solid var(--border);
             border-radius: 20px;
-            border: 1px solid #1e293b;
-            margin-bottom: 40px;
-        }
-
-        .stats-grid {
+            padding: 36px 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
             text-align: center;
+            position: relative;
         }
 
-        .stat-number {
-            font-size: 2.5rem;
+        .stat-item {
+            position: relative;
+        }
+
+        .stat-item:first-child::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: var(--border);
+        }
+
+        .stat-value {
+            font-size: 2.8rem;
             font-weight: 800;
-            color: #38bdf8;
+            color: var(--text-main);
+            letter-spacing: -1px;
         }
 
-        .stat-label {
-            font-size: 0.95rem;
-            color: #94a3b8;
+        .stat-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
             margin-top: 4px;
+            font-weight: 500;
         }
 
-        /* 주요 기능 소개 */
-        .features {
-            margin-bottom: 40px;
+        /* 기능 소개 카드 그리드 */
+        .features-section {
+            margin-bottom: 80px;
         }
 
-        .section-title {
+        .section-header {
+            margin-bottom: 32px;
+        }
+
+        .section-header h2 {
             font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 24px;
-            text-align: center;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
 
-        .feature-card {
-            background: #131722;
-            padding: 24px;
+        .feature-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 16px;
-            border: 1px solid #1e293b;
+            padding: 28px;
+            transition: all 0.25s ease;
         }
 
-        .feature-card h3 {
+        .feature-box:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            background-color: var(--bg-card-hover);
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .feature-box h3 {
             font-size: 1.2rem;
-            margin-bottom: 12px;
-            color: #f8fafc;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
-        .feature-card p {
+        .feature-box p {
             font-size: 0.95rem;
-            color: #94a3b8;
+            color: var(--text-muted);
+            word-break: keep-all;
         }
 
-        /* 푸터 */
+        /* 하단 푸터 */
         footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
             text-align: center;
-            padding: 20px;
-            color: #64748b;
+            color: var(--text-muted);
             font-size: 0.85rem;
-            border-top: 1px solid #1e293b;
-            margin-top: 60px;
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+            .stats-wrapper {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .stat-item:first-child::after {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-glow"></div>
+
     <div class="container">
-        <!-- 1. 헤더 및 메인 링크 -->
+        <!-- 네비게이션 -->
+        <nav>
+            <div class="brand">
+                ⚡ <span>Absolute</span>
+            </div>
+            <a href="https://discord.gg/sQnYwRy9t" target="_blank" class="btn btn-support" style="padding: 8px 16px; font-size: 0.85rem;">
+                고객센터
+            </a>
+        </nav>
+
+        <!-- 히어로 섹션 -->
         <section class="hero">
-            <h1>🤖 내 디스코드 봇</h1>
-            <p>서버 관리, 보안, 각종 편의 기능까지! 당신의 디스코드 서버를 더욱 안전하고 스마트하게 관리하세요.</p>
+            <div class="badge">ALL-IN-ONE DISCORD BOT</div>
+            <h1>서버 운영의 모든 문제,<br><span class="highlight">Absolute 하나로 완벽하게</span></h1>
+            <p>강력한 서버 보안, 유저 편의 기능, 실시간 오토모드까지. Absolute 봇이 안정적이고 쾌적한 디스코드 커뮤니티 환경을 선사합니다.</p>
             
-            <div class="btn-group">
-                <!-- 실제 봇 ID가 적용된 초대 링크 -->
-                <a href="https://discord.com/oauth2/authorize?client_id=1563849924146106500&permissions=8&scope=bot" target="_blank" class="btn btn-primary">
-                    🚀 봇 초대하기
+            <div class="cta-buttons">
+                <a href="https://discord.com/oauth2/authorize?client_id=1563849924146106500&permissions=8&scope=bot" target="_blank" class="btn btn-invite">
+                    🚀 Absolute 서버에 추가하기
                 </a>
-                <!-- 실제 디스코드 초대 링크 -->
-                <a href="https://discord.gg/sQnYwRy9t" target="_blank" class="btn btn-secondary">
-                    💬 지원 디스코드
+                <a href="https://discord.gg/sQnYwRy9t" target="_blank" class="btn btn-support">
+                    💬 공식 서포트 서버
                 </a>
             </div>
         </section>
 
-        <!-- 2. 실시간 통계 섹션 -->
-        <section class="stats-card">
-            <div class="stats-grid">
-                <div>
-                    <div class="stat-number" id="server-count">0</div>
-                    <div class="stat-label">함께하는 서버</div>
-                </div>
-                <div>
-                    <div class="stat-number" id="member-count">0</div>
-                    <div class="stat-label">보호 중인 유저</div>
-                </div>
+        <!-- 실시간 라이브 통계 -->
+        <div class="stats-wrapper">
+            <div class="stat-item">
+                <div class="stat-value" id="server-count">0</div>
+                <div class="stat-desc">Absolute와 함께하는 서버</div>
             </div>
-        </section>
+            <div class="stat-item">
+                <div class="stat-value" id="member-count">0</div>
+                <div class="stat-desc">보호 및 관리 중인 유저</div>
+            </div>
+        </div>
 
-        <!-- 3. 봇 기능 소개 섹션 -->
-        <section class="features">
-            <h2 class="section-title">✨ 주요 기능</h2>
+        <!-- 핵심 기능 소개 -->
+        <section class="features-section">
+            <div class="section-header">
+                <h2>Absolute가 제공하는 핵심 솔루션</h2>
+                <p>관리자의 수고를 줄이고 서버의 가치를 올려주는 핵심 기능을 만나보세요.</p>
+            </div>
+
             <div class="feature-grid">
-                <div class="feature-card">
-                    <h3>🛡️ 서버 보안 및 관리</h3>
-                    <p>악성 유저 차단 및 자동 쿨다운 설정을 통해 서버를 안전하게 보호합니다.</p>
+                <div class="feature-box">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>실시간 자동 보안 시스템</h3>
+                    <p>악성 유저, 초대 링크 무단 유포, 도배 및 단타 메시지를 24시간 실시간 감지하여 서버 피해를 차단합니다.</p>
                 </div>
-                <div class="feature-card">
-                    <h3>⚡ 자동화 명령어</h3>
-                    <p>역할 자동 부여, 환영 메시지 전송 등 번거로운 작업을 자동으로 처리합니다.</p>
+
+                <div class="feature-box">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>스마트 커뮤니티 케어</h3>
+                    <p>자동 역할 부여, 환영 및 퇴장 메시지, 기본 안내 가이드까지 일일이 관리할 필요 없이 정교하게 자동화합니다.</p>
                 </div>
-                <div class="feature-card">
-                    <h3>🎮 편의 & 엔터테인먼트</h3>
-                    <p>유저들이 즐길 수 있는 다양한 미니게임 및 서버 통계 조회 기능을 제공합니다.</p>
+
+                <div class="feature-box">
+                    <div class="feature-icon">📊</div>
+                    <h3>직관적인 관리 & 편의 도구</h3>
+                    <p>복잡한 설정 없이 간편한 명령어와 모니터링 기능으로 서버 현황을 한눈에 파악하고 케어할 수 있습니다.</p>
                 </div>
             </div>
         </section>
 
         <footer>
-            © 2026 내 디스코드 봇. All rights reserved.
+            © 2026 Absolute. All rights reserved.
         </footer>
     </div>
 
-    <!-- 4. 실시간 카운트 자바스크립트 -->
+    <!-- API 연동 및 카운트업 애니메이션 -->
     <script>
         function animateCount(elementId, targetNumber) {
             const element = document.getElementById(elementId);
-            const duration = 1500;
-            const frameRate = 1000 / 60;
+            const duration = 1600;
+            const frameRate = 1000 / 60; 
             const totalFrames = Math.round(duration / frameRate);
             let currentFrame = 0;
 
@@ -255,7 +385,7 @@
                 animateCount('member-count', data.memberCount || 0);
             })
             .catch(error => {
-                console.error('데이터 로드 실패:', error);
+                console.error('API 로드 실패:', error);
                 document.getElementById('server-count').innerText = '0';
                 document.getElementById('member-count').innerText = '0';
             });
