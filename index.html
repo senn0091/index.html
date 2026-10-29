@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>디스코드 봇 랜딩 페이지</title>
+</head>
+<body>
+    <h1>🤖 내 디스코드 봇 실시간 통계</h1>
+    
+    <!-- 서버 수와 멤버 수가 표시될 자리 -->
+    <p>서버 수: <span id="server-count">불러오는 중...</span>개</p>
+    <p>멤버 수: <span id="member-count">불러오는 중...</span>명</p>
+
+    <!-- 렌더 서버에서 데이터를 가져오는 자바스크립트 코드 -->
+    <script>
+        fetch('https://server-js-osl5.onrender.com/api/stats')
+            .then(response => response.json())
+            .then(data => {
+                // 서버에서 받아온 숫자를 웹페이지 화면에 쏙 넣어줍니다
+                document.getElementById('server-count').innerText = data.serverCount;
+                document.getElementById('member-count').innerText = data.memberCount;
+            })
+            .catch(error => console.error('데이터를 불러오지 못했습니다:', error));
+    </script>
+</body>
+</html>
