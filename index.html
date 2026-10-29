@@ -2,25 +2,135 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>디스코드 봇 랜딩 페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디스코드 봇 실시간 통계</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #0b0e14;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: #131722;
+            padding: 30px 24px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px 16px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .description {
+            margin-top: 32px;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+    </style>
 </head>
 <body>
-    <h1>🤖 내 디스코드 봇 실시간 통계</h1>
-    
-    <!-- 서버 수와 멤버 수가 표시될 자리 -->
-    <p>서버 수: <span id="server-count">불러오는 중...</span>개</p>
-    <p>멤버 수: <span id="member-count">불러오는 중...</span>명</p>
 
-    <!-- 렌더 서버에서 데이터를 가져오는 자바스크립트 코드 -->
+    <div class="container">
+        <h1 class="title">🤖 내 디스코드 봇</h1>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" id="server-count">0</div>
+                <div class="stat-label">서버 보호중</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="member-count">0</div>
+                <div class="stat-label">멤버 보호중</div>
+            </div>
+        </div>
+
+        <p class="description">
+            우리 디스코드 봇은 서버 생태계에 맞춰 여러 편의 및 보안 기능을 제공하여 당신의 서버를 안전하고 편리하게 만듭니다.
+        </p>
+    </div>
+
     <script>
+        // 숫자가 0부터 목표 수치까지 촤르륵 올라가는 애니메이션 함수
+        function animateCount(elementId, targetNumber) {
+            const element = document.getElementById(elementId);
+            const duration = 1500; // 애니메이션 진행 시간 (1.5초)
+            const frameRate = 1000 / 60; // 초당 60프레임
+            const totalFrames = Math.round(duration / frameRate);
+            
+            let currentFrame = 0;
+
+            const counter = setInterval(() => {
+                currentFrame++;
+                // 점점 느려지면서 멈추는 진행률 계산 (Ease-Out)
+                const progress = 1 - Math.pow(1 - currentFrame / totalFrames, 3);
+                const currentNumber = Math.floor(targetNumber * progress);
+
+                element.innerText = currentNumber.toLocaleString(); // 1,000 단위 콤마 추가
+
+                if (currentFrame >= totalFrames) {
+                    element.innerText = targetNumber.toLocaleString();
+                    clearInterval(counter);
+                }
+            }, frameRate);
+        }
+
+        // Render 백엔드 API에서 데이터 불러오기
         fetch('https://server-js-osl5.onrender.com/api/stats')
             .then(response => response.json())
             .then(data => {
-                // 서버에서 받아온 숫자를 웹페이지 화면에 쏙 넣어줍니다
-                document.getElementById('server-count').innerText = data.serverCount;
-                document.getElementById('member-count').innerText = data.memberCount;
+                // 데이터를 받아오면 애니메이션 실행
+                animateCount('server-count', data.serverCount || 0);
+                animateCount('member-count', data.memberCount || 0);
             })
-            .catch(error => console.error('데이터를 불러오지 못했습니다:', error));
+            .catch(error => {
+                console.error('데이터를 불러오는 중 에러 발생:', error);
+                document.getElementById('server-count').innerText = '0';
+                document.getElementById('member-count').innerText = '0';
+            });
     </script>
 </body>
 </html>
